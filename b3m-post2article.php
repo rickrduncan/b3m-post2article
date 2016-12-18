@@ -8,7 +8,7 @@
  *
  *
  * 	Version: 		1.0.0
- * 	License: 		GPLv2
+ * 	License: 		GPLv3
  *
  *
  *  WordPress Functionality Plugin is free software: you can redistribute it and/or modify
@@ -32,7 +32,6 @@
 *
 * @since 1.0.0
 */
-add_action( 'init', 'b3m_change_post_object_label' );
 function b3m_change_post_object_label() {
     
     global $wp_post_types;
@@ -50,6 +49,7 @@ function b3m_change_post_object_label() {
     $labels->not_found_in_trash = 'No Articles found in Trash';
     $labels->name_admin_bar = 'Article';
 }
+add_action( 'init', 'b3m_change_post_object_label' );
 
 
 /**
@@ -57,7 +57,6 @@ function b3m_change_post_object_label() {
 *
 * @since 1.0.0
 */
-add_action( 'admin_menu', 'b3m_change_post_menu_label' );
 function b3m_change_post_menu_label() {
     
     global $menu;
@@ -70,6 +69,7 @@ function b3m_change_post_menu_label() {
     
     echo '';
 }
+add_action( 'admin_menu', 'b3m_change_post_menu_label' );
 
 
 /**
@@ -77,13 +77,13 @@ function b3m_change_post_menu_label() {
 *
 * @since 1.0.0
 */
-add_action( 'admin_print_styles', 'register_admin_styles' );
-function register_admin_styles() {
+function b3m_register_admin_styles() {
 	
 	if ( is_admin() ) {
 		wp_enqueue_style( 'b3m-post2article-styles', plugins_url( 'b3m-post2article/css/post2article.admin.css' ) );
 	}
 }
+add_action( 'admin_print_styles', 'b3m_register_admin_styles' );
 
 
 /**
@@ -91,7 +91,7 @@ function register_admin_styles() {
 *
 * @since 1.0.0
 */
-function article_post_updated_messages ( $msg ) {
+function b3m_article_post_updated_messages ( $msg ) {
     $msg[ 'post' ] = array (
          0 => '', // Unused. Messages start at index 1.
 	 1 => "Article updated.",
@@ -113,7 +113,4 @@ function article_post_updated_messages ( $msg ) {
     );
     return $msg;
 }
-add_filter( 'post_updated_messages', 'article_post_updated_messages', 10, 1 );
-
-
-
+add_filter( 'post_updated_messages', 'b3m_article_post_updated_messages', 10, 1 );
